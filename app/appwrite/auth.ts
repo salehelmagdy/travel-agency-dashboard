@@ -44,11 +44,11 @@ export const getUser = async () => {
   }
 };
 
-export const getGooglePicture = async () => {
+export const getGooglePicture = async (accessToken: string) => {
   try {
     const response = await fetch(
-      "https://people.googleapis.com/v1/people/me?personFields=photos"
-      //   { headers: { Authorization: `Bearer ${accessToken}` } }
+      "https://people.googleapis.com/v1/people/me?personFields=photos",
+      { headers: { Authorization: `Bearer ${accessToken}` } }
     );
     if (!response.ok) throw new Error("Failed to fetch Google profile picture");
 
@@ -75,7 +75,10 @@ export const storeUserData = async () => {
     if (documents.length > 0) return documents[0];
 
     //get profile photo from google
-    const imageUrl = await getGooglePicture();
+    const { providerAccessToken } = (await account.getSession("current")) || {};
+    const profilePicture = providerAccessToken
+      ? await getGooglePicture(providerAccessToken)
+      : null;
 
     //create new user document
     const newUser = await database.createDocument(
@@ -86,7 +89,7 @@ export const storeUserData = async () => {
         accountId: user.$id,
         email: user.email,
         name: user.name,
-        imageUrl: imageUrl || "",
+        imageUrl: profilePicture || "",
         joinedAt: new Date().toISOString(),
       }
     );
@@ -116,5 +119,21 @@ export const getExistingUser = async () => {
   } catch (e) {
     console.log("get ExistingUser error", e);
     return null;
+  }
+};
+
+export const getAllUsers = async (limit: number, offset: number) => {
+  try {
+    const { documents: users, total } = await database.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      [Query.limit(limit), Query.offset(offset)]
+    );
+
+    if (total === 0) return { users: [], total };
+    return { users, total };
+  } catch (e) {
+    console.log("getAllUsers error", e);
+    return { users: [], total: 0 };
   }
 };

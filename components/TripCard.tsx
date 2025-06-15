@@ -4,7 +4,7 @@ import {
   ChipListComponent,
   ChipsDirective,
 } from "@syncfusion/ej2-react-buttons";
-import { cn, getFirstWord } from "lib/utils";
+import { cn, getFirstWord } from "~/lib/utils";
 
 const TripCard = ({
   id,

@@ -3,7 +3,7 @@ import { Header } from "components";
 import type { Route } from "./+types/create-trip";
 import React, { useState } from "react";
 import { comboBoxItems, selectItems } from "~/constants";
-import { cn, formatKey } from "lib/utils";
+import { cn, formatKey } from "~/lib/utils";
 import { LayerDirective, MapsComponent } from "@syncfusion/ej2-react-maps";
 import { world_map } from "~/constants/world_map";
 import { ButtonComponent } from "@syncfusion/ej2-react-buttons";

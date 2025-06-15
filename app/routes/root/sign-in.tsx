@@ -1,5 +1,5 @@
-import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
 import { Link, redirect } from "react-router";
+import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
 import { loginWithGoogle } from "~/appwrite/auth";
 import { account } from "~/appwrite/client";
 
@@ -15,14 +15,14 @@ export async function clientLoader() {
 
 const SignIn = () => {
   return (
-    <div className="auth">
-      <section className="size-full glassmorphism flex-center">
+    <main className="auth">
+      <section className="size-full glassmorphism flex-center px-6">
         <div className="sign-in-card">
           <header className="header">
             <Link to="/">
               <img
                 src="/assets/icons/logo.svg"
-                alt="Logo"
+                alt="logo"
                 className="size-[30px]"
               />
             </Link>
@@ -33,8 +33,9 @@ const SignIn = () => {
             <h2 className="p-28-semibold text-dark-100 text-center">
               Start Your Travel Journey
             </h2>
-            <p className="p-18-regular text-gray-100 text-center !leading-7">
-              Sign in with google to manage destinations, itineraries, and user
+
+            <p className="p-18-regular text-center text-gray-100 !leading-7">
+              Sign in with Google to manage destinations, itineraries, and user
               activity with ease.
             </p>
           </article>
@@ -42,13 +43,13 @@ const SignIn = () => {
           <ButtonComponent
             type="button"
             iconCss="e-search-icon"
-            className="!w-full !h-11 button-class"
+            className="button-class !h-11 !w-full"
             onClick={loginWithGoogle}
           >
             <img
               src="/assets/icons/google.svg"
+              className="size-5"
               alt="google"
-              className="size-5 "
             />
             <span className="p-18-semibold text-white">
               Sign in with Google
@@ -56,8 +57,7 @@ const SignIn = () => {
           </ButtonComponent>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
-
 export default SignIn;
